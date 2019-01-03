@@ -1,0 +1,210 @@
+﻿<script>
+    $(function () {
+        var oDate = new Date();
+        document.getElementById("printDate").innerText = oDate.getFullYear() + "-" + (oDate.getMonth() + 1) + "-" + oDate.getDate() + " " + oDate.getHours() + ":" + oDate.getMinutes();
+        var confirm = document.getElementById("confirm").value;
+        if (confirm === "特别允收：轻微疵点") {
+            document.getElementById("spchk").checked = true;
+        }
+        if (confirm === "不合格") {
+            document.getElementById("unqachk").checked = true;
+        }
+
+        var approval = document.getElementById("approval").value;
+        if (approval === "特许放行;退翻加工") {
+            document.getElementById("appchk1").checked = true;
+        } else if (approval === "退翻加工") {
+            document.getElementById("appchk2").checked = true;
+        } else if (approval === "回炉(不需重造)") {
+            document.getElementById("appchk3").checked = true;
+        } else if (approval === "回炉重造") {
+            document.getElementById("appchk4").checked = true;
+        }
+
+        var correct = document.getElementById("correct").value;
+        if (correct === "是") {
+            document.getElementById("proposalchk1").checked = true;
+        } else if (correct === "否") {
+            document.getElementById("proposalchk2").checked = true;
+        } else {
+            document.getElementById("noproposalchk").checked = true;
+        }
+
+        var rollQty = document.getElementsByClassName("rollQty");
+        var prodQty = document.getElementsByClassName("prodQty");
+        var totalRollQty = 0;
+        var totalProdQty = 0;
+        for (var i = 0; i < rollQty.length;i++) {
+            totalRollQty += Number(rollQty[i].innerText);
+            totalProdQty += Number(prodQty[i].innerText);
+        }
+        document.getElementById("totalRollQty").innerText = totalRollQty;
+        document.getElementById("totalProdQty").innerText = totalProdQty;
+        
+    });
+</script>
+<link href="../assets/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<style>
+    table,tr,td{
+        border:1px solid red !important;
+    }
+</style>
+<div style="width:900px; margin:20px;">
+    <div class="hidden">
+        <input type="hidden" id="confirm" value="{QER_QualityConfirmation}">
+        <input type="hidden" id="approval" value="{QER_QAApproval}">
+        <input type="hidden" id="correct" value="{QER_IsNeedCorrect}">
+        <input type="hidden" id="respDept" value="{QER_RespDept}">
+    </div>
+    <table style="width:100%;" cellpadding="0" aling=center>
+        <tr>
+            <td align="left" valign="top" style="width:30%">
+                <img src="images/company_name.gif">
+            </td>
+            <td style="font-size:22px;text-align:center;width:40%;" valign="middle">
+                <b style="font-size:25px;">
+                    <u>
+                        异常品质处理表
+                    </u>
+                </b>
+            </td>
+            <td align="right" valign="top">
+                <img src="images/logo.GIF">
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered" style="margin-top:10px;border:1px solid #999;">
+        <tr>
+            <td style="width: 110px;font-size:18px;">品&emsp;&emsp;号</td>
+            <td style="font-size:18px;">{QER_ItemPart}</td>
+            <td style="font-size:18px;">单&emsp;&emsp;号</td>
+            <td style="font-size:18px;"><big>{QER_OrdNo}</big></td>
+        </tr>
+        <tr>
+            <td style="font-size:18px;">规&emsp;&emsp;格</td>
+            <td style="font-size:18px;">{QER_ItemDesc}</td>
+            <td style="font-size:18px;">订单数量</td>
+            <td style="font-size:18px;"><b>{QER_OrdQty}KG</b></td>
+        </tr>
+        <tr>
+            <td style="font-size:18px;">客&emsp;&emsp;户</td>
+            <td style="font-size:18px;">{QER_CustItem}</td>
+            <td style="font-size:18px;">营&ensp;业&ensp;员</td>
+            <td style="font-size:18px;">{QER_Sales}</td>
+        </tr>
+        <tr>
+            <td style="font-size:18px;">责任部门</td>
+            <td style="font-size:18px;">{QER_RespDept}</td>
+            <td style="font-size:18px;">产品用途</td>
+            <td style="font-size:18px;">{QER_UseTo}</td>
+        </tr>
+    </table>
+    <div style="min-height:200px;border:1px solid #999;margin-top:30px;">
+        <table style="width:100%;" class="table table-bordered">
+            <tr>
+                <th width="38%" style="font-size:18px;text-align:center;">项&emsp;&emsp;&emsp;&emsp;目</th>
+                <th style="font-size:18px;text-align:center;">品&ensp;质&ensp;疵&ensp;点</th>
+            </tr>
+            <Row>
+                <tr>
+                    <td style="font-size:18px;text-align:center;">{QER_QualityDtl.QERQ_Project}</td>
+                    <td style="font-size:18px;text-align:center;">{QER_QualityDtl.QERQ_Defect}</td>
+                </tr>
+            </Row>
+        </table>
+        <div style="height:100%"></div>
+    </div>
+    <div style="min-height:360px;border:1px solid #999;">
+        <table style="width:100%;" class="table table-bordered">
+                <tr>
+                    <th style="font-size:18px;">卷号</th>
+                    <th style="font-size:18px;">卷长数量</th>
+                    <th style="font-size:18px;">卷长单位</th>
+                    <th style="font-size:18px;">数量</th>
+                    <th style="font-size:18px;">单位</th>
+                    <th style="font-size:18px;">生产班次</th>
+                    <th style="font-size:18px;">日期</th>
+                    <th style="font-size:18px;" class="hidden">异常数量</th>
+                </tr>
+            <Row>
+                <tr>
+                    <td style="font-size:18px;">{QER_RollDtl.QERD_Roll}</td>
+                    <td style="font-size:18px;" class="rollQty">{QER_RollDtl.QERD_RollQty}</td>
+                    <td style="font-size:18px;">{QER_RollDtl.QRED_RollUm}</td>
+                    <td style="font-size:18px;" class="prodQty">{QER_RollDtl.QERD_ProdQty}</td>
+                    <td style="font-size:18px;">{QER_RollDtl.QERD_Uom}</td>
+                    <td style="font-size:18px;">{QER_RollDtl.QERD_Shift}</td>
+                    <td style="font-size:18px;">{QER_RollDtl.QERD_Date}</td>
+                    <td style="font-size:18px;" class="hidden">{QER_RollDtl.QERD_AbQty}</td>
+                </tr>
+            </Row>
+            <tr>
+                <td style="font-size:18px;"></td>
+                <td style="font-size:18px;color:blue;"><span id="totalRollQty"></span></td>
+                <td style="font-size:18px;"></td>
+                <td style="font-size:18px;color:blue;"><span id="totalProdQty"></span></td>
+                <td style="font-size:18px;"></td>
+                <td style="font-size:18px;"></td>
+                <td style="font-size:18px;"></td>
+                <td style="font-size:18px;" class="hidden"></td>
+            </tr>
+        </table>
+        <div style="height:100%"></div>
+    </div>
+
+    <table style="width:100%;" class="table table-bordered">
+        <tr>
+            <td style="width: 50%;vertical-align:top;font-size:18px;">
+                <label for="remark" style="display:block;">备注:</label>
+                <textarea name="remark" rows="5" style="border:none;width:90%;" draggable="false" readonly="readonly">{QER_Remark}
+                </textarea>
+            </td>
+            <td style="font-size:18px;">
+                <label>品质确认:</label>
+                <div class="checkbox"><label>特别允收：轻微疵点<input type="checkbox" id="spchk" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox"><label>不合格<input type="checkbox" id="unqachk" style="cursor: pointer;" disabled="disabled"></label></div>
+            </td>
+        </tr>
+    </table>
+    <table style="width:100%;margin-top:30px;" class="table table-bordered">
+        <tr>
+            <td style="font-size:18px;">
+                <div class="checkbox-inline"><label>特许放行<input type="checkbox" id="appchk1" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox-inline"><label>退翻加工<input type="checkbox" id="appchk2" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox-inline"><label>回炉(不需重造)<input type="checkbox" id="appchk3" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox-inline"><label>回炉重造<input type="checkbox" id="appchk4" style="cursor: pointer;" disabled="disabled"></label></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:18px;">
+                <label>是否需转填《矫正/预防提案表》:</label>
+                <div class="checkbox-inline"><label>是<input type="checkbox" id="proposalchk1" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox-inline"><label>否<input type="checkbox" id="proposalchk2" style="cursor: pointer;" disabled="disabled"></label></div>
+                <div class="checkbox-inline hidden"><label>不勾选<input type="checkbox" id="noproposalchk" style="cursor: pointer;" disabled="disabled"></label></div>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <Row>
+            <tr>
+                <td style="font-size:20px;">
+                    <b><label>审批意见：</label></b>
+                </td>
+                <td style="font-size:20px;">{QER_ApprovalComments}</td>
+                <td style="font-size:20px;">(<strong>{QER_ApprovalComments.UserName}</strong>&ensp;</td>
+                <td style="font-size:20px;">{QER_ApprovalComments.DateTime})</td>
+            </tr>
+        </Row>
+    </table>
+    <div style="width:100%;position:relative;border:0">
+        <div style="font-size: 20px;margin-top:5px;">
+            <label>打印时间：</label>
+            <label id="printDate" style="width: 200px; display: inline-block;"></label>
+            <label>打印人：</label>
+            <label id="printBy">{PrintUserName}</label>
+        </div>
+        <div style="font-size: 18px;top:10px;text-align:right;">
+            <label>QUA-13F V.5 07/2011</label>
+        </div>
+    </div>
+</div>
