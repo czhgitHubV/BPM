@@ -13,17 +13,38 @@
 		<link href="bootstrap.min.css" rel="stylesheet"/>
 		<link href="jquery-ui.css" rel="stylesheet"/>
 		<link href="jquery-ui-timepicker-addon.css" rel="stylesheet"/>
+		<style>
+		</style>
 		<script>
 			$(function(){
 				$('#start').datetimepicker({
+					changeMonth:true,
+					changeYear:true,
 					timeFormat:"hh:mm",
-					dateFormat:"yyyy-MM-dd"
+					dateFormat:"yy-mm-dd",
+					timeText: '时间',
+					hourText: '时',
+					minuteText: '分',
+					currentText: '现在',
+					closeText: '完成'
 				});
 				$('#end').datetimepicker({
-					timeFormat:"hh:mm",
-					dateFormat:"yyyy-MM-dd"
+				    timeFormat: 'HH:mm',
+					dateFormat:"yy-mm-dd",
+					hourGrid: 4,
+				    minuteGrid: 10,
+					changeMonth:true,
+					changeYear:true,
+					showMonthAfterYear:true,
+					timeText: '时间',
+					hourText: '时',
+					minuteText: '分',
+					currentText: '今天',
+					closeText: '完成',
+					yearRange:'-25:+25',
+					dayNamesMin: ['日','一','二','三','四','五','六'],
+					monthNamesShort:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
 				});
-				
 			});
 			
 		</script>
