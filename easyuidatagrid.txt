@@ -1,0 +1,32 @@
+https://www.cnblogs.com/Med1tator/p/6801961.html
+
+<table id="dg"></table>
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            singleSelect: true,
+            onLoadSuccess: compute,//加载完毕后执行计算
+            url: 'product.json', fitColumns: true, pagination: true, pageSize: 3,
+            title: '统计easyui datagrid某列之和显示在对应列下面',
+            width: 400,
+            height: 300,
+            columns: [[{ field: 'itemid', width: 80, title: 'Item ID' },
+            { field: 'productname', width: 100, editor: 'text', title: 'Product Name' },
+            { field: 'listprice', width: 80, align: 'right', title: 'List Pirce' },
+            { field: 'unitcost', width: 80, align: 'right', title: 'Unit Cost' }]]
+        });
+    });
+    function compute() {//计算函数
+        var rows = $('#dg').datagrid('getRows')//获取当前的数据行
+        var ptotal = 0//计算listprice的总和
+            , utotal = 0;//统计unitcost的总和
+        for (var i = 0; i < rows.length; i++) {
+            ptotal += parseFloat(rows[i]['listprice']);
+            utotal += parseFloat(rows[i]['unitcost']);
+　　　　}
+//新增一行显示统计信息
+        $('#dg').datagrid('appendRow', { itemid: '<b>统计：</b>', listprice: ptotal.toFixed(1), unitcost: utotal });
+    }
+    </script>
+
+
